@@ -1,0 +1,17 @@
+{
+  "name": "brokerportal",
+  "displayName": "brokerportal",
+  "expo": {
+    "name": "Broker Portal",
+    "slug": "brokerportal",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
