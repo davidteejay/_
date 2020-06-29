@@ -4,12 +4,18 @@
   "expo": {
     "name": "Broker Portal",
     "slug": "brokerportal",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
+    "android": {
+      "packageName": "com.chiplc.brokerportal"
+    },
+    "ios": {
+      "bundleIdentifier": "com.chiplc.brokerportal"
+    },
     "assetBundlePatterns": [
       "**/*"
     ]

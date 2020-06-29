@@ -1,4 +1,4 @@
-package com.brokerportal;
+package com.chiplc.brokerportal;
 
 import android.os.Bundle;
 
