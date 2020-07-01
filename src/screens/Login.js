@@ -47,6 +47,7 @@ const Login = ({ navigation }) => {
           <Button
             text="Login"
             style={styles.button}
+            onPress={() => navigation.navigate('Main')}
           />
           <TouchableOpacity
             style={styles.forgotPassword}
