@@ -5,7 +5,9 @@ import Drawer from '../components/Drawer'
 
 import Dashboard from '../screens/Dashboard'
 
+import InsuranceMgt from '../screens/InsuranceMgt'
 import Insurance from '../screens/Insurance'
+import NewPolicy from '../screens/NewPolicy'
 
 const DashboardStack = createStackNavigator({
   Dashboard: {
@@ -17,8 +19,20 @@ const DashboardStack = createStackNavigator({
 })
 
 const InsuranceStack = createStackNavigator({
+  InsuranceMgt: {
+    screen: InsuranceMgt,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
   Insurance: {
     screen: Insurance,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  NewPolicy: {
+    screen: NewPolicy,
     navigationOptions: {
       headerShown: false,
     },

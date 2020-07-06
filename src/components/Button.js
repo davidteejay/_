@@ -1,8 +1,11 @@
 import React from 'react'
-import { TouchableOpacity, ActivityIndicator, Platform } from 'react-native'
+import {
+  TouchableOpacity, ActivityIndicator, SafeAreaView,
+} from 'react-native'
 
 import Text from './Text'
 import { darkRed } from '../config/colors'
+import globalStyles from '../config/globalStyles'
 
 const Button = ({
   style = null,
@@ -22,7 +25,7 @@ const Button = ({
   <TouchableOpacity
     style={{
       paddingHorizontal: 20,
-      borderWidth: 1,
+      borderWidth: transparent ? 1 : 0,
       borderColor: transparent
         ? disabled || isLoading
           ? '#999'
@@ -30,7 +33,7 @@ const Button = ({
         : '#fff0',
       borderStyle: 'solid',
       borderRadius: !isRounded ? 7 : 25,
-      height: 50,
+      height: 45,
       width: fullWidth ? '100%' : 'auto',
       backgroundColor: transparent ? 'transparent'
         : disabled
@@ -58,7 +61,7 @@ const Button = ({
                   ? '#555'
                   : color,
               fontSize: 15,
-              marginTop: Platform.OS === 'ios' ? 5 : 0,
+              // marginTop: Platform.OS === 'ios' ? 5 : 0,
               ...textStyle,
             }}
           >
@@ -70,31 +73,34 @@ const Button = ({
 
 export const FAB = ({
   style = null,
-  backgroundColor = '#1a237e',
+  backgroundColor = darkRed,
   onPress = () => null,
   icon,
   size = 60,
   ...props
 }) => (
-  <TouchableOpacity
-    style={{
-      position: 'absolute',
-      bottom: 10,
-      right: 30,
-      borderRadius: size / 2,
-      height: size,
-      width: size,
-      backgroundColor,
-      alignItems: 'center',
-      justifyContent: 'center',
-      // elevation: 5,
-      ...style,
-    }}
-    onPress={onPress}
-    {...props}
-  >
-    {props.children && props.children}
-  </TouchableOpacity>
+  <SafeAreaView>
+    <TouchableOpacity
+      style={{
+        ...globalStyles.shadow,
+        position: 'absolute',
+        bottom: 10,
+        right: 30,
+        borderRadius: size / 2,
+        height: size,
+        width: size,
+        backgroundColor,
+        alignItems: 'center',
+        justifyContent: 'center',
+        // elevation: 5,
+        ...style,
+      }}
+      onPress={onPress}
+      {...props}
+    >
+      {props.children && props.children}
+    </TouchableOpacity>
+  </SafeAreaView>
 )
 
 export default Button

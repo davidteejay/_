@@ -22,6 +22,7 @@ const Input = ({
   showText = true,
   width = '100%',
   secureTextEntry = false,
+  isSearchBox = false,
   ...props
 }) => {
   const [show, setShow] = useState(false)
@@ -40,6 +41,14 @@ const Input = ({
           borderStyle: 'solid',
         }}
       >
+        {isSearchBox && (
+          <Ionicons
+            color="#333"
+            name="ios-search"
+            size={18}
+            style={{ paddingHorizontal: 7 }}
+          />
+        )}
         <TextInput
           value={value}
           placeholder={placeholder}
@@ -47,6 +56,7 @@ const Input = ({
           onChangeText={onChangeText}
           multiline={multiline}
           secureTextEntry={secureTextEntry && !show}
+          clearButtonMode="while-editing"
           style={{
             flex: 1,
             color,
@@ -162,11 +172,11 @@ export const Dropdown = ({
               })
             }}
           >
-            <Text style={selectedValue ? styles.pickerItem : { ...styles.pickerItem, color: '#0005' }}>{selectedValue || placeholder}</Text>
-            <Ionicons
-              color="#0005"
+            <Text style={selectedValue ? styles.pickerItem : { ...styles.pickerItem, color: '#333' }}>{selectedValue || placeholder}</Text>
+            <MaterialIcons
+              color="#333"
               size={18}
-              name="ios-arrow-drop-down"
+              name="arrow-drop-down"
             />
           </TouchableOpacity>
       )}
@@ -188,13 +198,14 @@ export default Input
 const styles = StyleSheet.create({
   picker: {
     width: '100%',
-    paddingHorizontal: 15,
     height: 50,
     backgroundColor: 'transparent',
-    borderRadius: 25,
+    borderBottomColor: '#333',
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
   },
   pickerItem: {
     color: '#000',
-    fontFamily: 'Gotham-Book',
+    fontFamily: 'Montserrat-Regular',
   },
 })
