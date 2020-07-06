@@ -2,6 +2,7 @@ import React from 'react'
 import { TouchableOpacity, ActivityIndicator, Platform } from 'react-native'
 
 import Text from './Text'
+import { darkRed } from '../config/colors'
 
 const Button = ({
   style = null,
@@ -10,7 +11,7 @@ const Button = ({
   transparent = false,
   isRounded = true,
   text,
-  backgroundColor = '#1a237e',
+  backgroundColor = darkRed,
   color = '#fff',
   isLoading = false,
   disabled = false,
@@ -26,7 +27,7 @@ const Button = ({
         ? disabled || isLoading
           ? '#999'
           : backgroundColor
-        : '#fff',
+        : '#fff0',
       borderStyle: 'solid',
       borderRadius: !isRounded ? 7 : 25,
       height: 50,

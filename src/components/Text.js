@@ -4,7 +4,8 @@ import { Text as NativeText } from 'react-native'
 export default ({ style, ...props }) => (
   <NativeText
     style={{
-      fontFamily: 'Montserrat-Regular',
+      fontFamily: 'Montserrat-Medium',
+      color: '#333',
       ...style,
     }}
     {...props}
@@ -16,19 +17,8 @@ export default ({ style, ...props }) => (
 export const LightText = ({ style, ...props }) => (
   <NativeText
     style={{
-      fontFamily: 'Montserrat-Light',
-      ...style,
-    }}
-    {...props}
-  >
-    {props.children}
-  </NativeText>
-)
-
-export const MediumText = ({ style, ...props }) => (
-  <NativeText
-    style={{
-      fontFamily: 'Montserrat-Medium',
+      fontFamily: 'Montserrat-Regular',
+      color: '#333',
       ...style,
     }}
     {...props}
@@ -41,6 +31,7 @@ export const BoldText = ({ style, ...props }) => (
   <NativeText
     style={{
       fontFamily: 'Montserrat-Bold',
+      color: '#333',
       ...style,
     }}
     {...props}

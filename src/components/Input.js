@@ -1,16 +1,15 @@
 /* eslint-disable no-param-reassign */
-import React from 'react'
+import React, { useState } from 'react'
 import {
   TextInput, View, TouchableOpacity, Platform, Picker,
-  ActionSheetIOS,
+  ActionSheetIOS, StyleSheet,
 } from 'react-native'
 import { MaterialIcons, Ionicons } from '@expo/vector-icons'
 
 import Text, { BoldText } from './Text'
 
-export default ({
-  isRounded = true,
-  color = '#000',
+const Input = ({
+  color = '#333',
   backgroundColor = 'transparent',
   label = null,
   value,
@@ -21,37 +20,58 @@ export default ({
   placeholder = '',
   error = null,
   showText = true,
+  width = '100%',
+  secureTextEntry = false,
   ...props
-}) => (
-  <View style={{ marginBottom: 10, ...coverStyle }}>
-    {label && <BoldText style={{ marginBottom: 15 }}>{label}</BoldText>}
-    <TextInput
-      value={value}
-      placeholder={placeholder}
-      placeholderTextColor={color.includes('#')
-        ? `${color}${color.length === 5 || color.length === 9
-          ? ''
-          : color.length === 4
-            ? 5
-            : 55
-        }`
-        : color}
-      onChangeText={onChangeText}
-      multiline={multiline}
-      style={{
-        width: '100%',
-        color,
-        fontFamily: 'Montserrat-Regular',
-        paddingHorizontal: 15,
-        paddingTop: multiline ? 15 : 0,
-        paddingBottom: multiline ? 15 : 0,
-        height: multiline ? 200 : 50,
-        backgroundColor,
-        borderRadius: isRounded ? 25 : 7,
-        ...style,
-      }}
-      {...props}
-    />
+}) => {
+  const [show, setShow] = useState(false)
+
+  return (
+    <View style={{ width, ...coverStyle }}>
+      {label && <BoldText style={{ marginBottom: 15 }}>{label}</BoldText>}
+      <View
+        style={{
+          width: '100%',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderBottomColor: color,
+          borderBottomWidth: 1,
+          borderStyle: 'solid',
+        }}
+      >
+        <TextInput
+          value={value}
+          placeholder={placeholder}
+          placeholderTextColor={color}
+          onChangeText={onChangeText}
+          multiline={multiline}
+          secureTextEntry={secureTextEntry && !show}
+          style={{
+            flex: 1,
+            color,
+            fontFamily: 'Montserrat-Medium',
+            paddingTop: multiline ? 15 : 0,
+            paddingBottom: multiline ? 15 : 0,
+            height: multiline ? 200 : 45,
+            backgroundColor,
+            ...style,
+          }}
+          {...props}
+        />
+        {secureTextEntry && (
+          <TouchableOpacity
+            style={{ paddingHorizontal: 7 }}
+            onPress={() => setShow(!show)}
+          >
+            <Ionicons
+              color="#333"
+              name={show ? 'ios-eye-off' : 'ios-eye'}
+              size={18}
+            />
+          </TouchableOpacity>
+        )}
+      </View>
       {showText && (
         <Text
           style={{
@@ -63,8 +83,9 @@ export default ({
           {error}
         </Text>
       )}
-  </View>
-)
+    </View>
+  )
+}
 
 export const Checkbox = ({ value, onValueChange, backgroundColor = '#000' }) => (
   <TouchableOpacity
@@ -161,6 +182,8 @@ export const Dropdown = ({
     </View>
   )
 }
+
+export default Input
 
 const styles = StyleSheet.create({
   picker: {
