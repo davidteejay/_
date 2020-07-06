@@ -8,6 +8,37 @@ const globalStyles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 3,
   },
+  card: {
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10,
+    width: '100%',
+    marginBottom: 20,
+  },
+  modalCover: {
+    flex: 1,
+    backgroundColor: '#0005',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 30,
+  },
+  modal: {
+    width: '100%',
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    maxHeight: '85%',
+  },
+  modalContent: {
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    backgroundColor: 'transparent',
+    width: '100%',
+  },
+  closeModal: {
+    alignItems: 'flex-end',
+    paddingHorizontal: 20,
+    paddingTop: 10,
+  },
 })
 
 export default globalStyles

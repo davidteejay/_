@@ -14,6 +14,7 @@ const Header = ({
   backgroundColor = 'transparent',
   color = '#333',
   back = false,
+  hasSearch = false,
   backFunc = null,
   RightComponent = null,
   style = null,
@@ -49,7 +50,17 @@ const Header = ({
       >
         {title}
       </Text>
-      {RightComponent || <View style={{ width: 40 }} />}
+      {hasSearch ? (
+        <TouchableOpacity
+          style={styles.button}
+        >
+          <Ionicons
+            name="ios-search"
+            size={22}
+            color={color}
+          />
+        </TouchableOpacity>
+      ) : RightComponent || <View style={{ width: 40 }} />}
     </View>
   </SafeAreaView>
 )
@@ -58,6 +69,7 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 15,
     paddingHorizontal: 20,
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',

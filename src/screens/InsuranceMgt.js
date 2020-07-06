@@ -10,25 +10,55 @@ import Text, { BoldText } from '../components/Text'
 import Header from '../components/Header'
 import { FAB } from '../components/Button'
 
+const InsuranceItem = ({ navigation }) => {
+  return (
+    <TouchableOpacity
+      style={styles.item}
+      onPress={() => navigation.navigate('Insurance')}
+    >
+      <BoldText style={styles.itemTitle}>Insurance Title</BoldText>
+      <Text style={styles.itemSubtitle}>Insurance Type</Text>
+    </TouchableOpacity>
+  )
+}
+
+const n = 8
+
 const Insurance = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <Header
           navigation={navigation}
-          title="Insurance Title"
-          back
+          title="Insurance Management"
+          hasSearch
         />
         <ScrollView style={styles.content}>
-          
+          {/* <View style={styles.filterContainer}>
+            <TouchableOpacity
+              style={styles.filterButton}
+            >
+              <Ionicons
+                name="ios-funnel"
+                size={18}
+                color="#333"
+              />
+              <Text style={styles.filterText}>Filter</Text>
+            </TouchableOpacity>
+          </View> */}
+          {[...Array(n)].map((e, i) => (
+            <InsuranceItem
+              key={i}
+              navigation={navigation}
+            />
+          ))}
         </ScrollView>
       </View>
       <FAB
         backgroundColor="#fff"
-        onPress={() => navigation.navigate('NewPolicy')}
       >
         <MaterialIcons
-          name="add"
+          name="filter-list"
           size={22}
           color="#333"
         />
@@ -67,7 +97,11 @@ const styles = StyleSheet.create({
   },
   item: {
     ...globalStyles.shadow,
-    ...globalStyles.card,
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10,
+    width: '100%',
+    marginBottom: 20,
   },
   itemTitle: {
     fontSize: 17,
