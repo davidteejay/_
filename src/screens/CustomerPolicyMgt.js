@@ -10,27 +10,40 @@ import Text, { BoldText } from '../components/Text'
 import Header from '../components/Header'
 import { FAB } from '../components/Button'
 
-const InsuranceItem = ({ navigation }) => {
+const PolicyItem = ({ navigation, expired }) => {
   return (
     <TouchableOpacity
       style={styles.item}
-      onPress={() => navigation.navigate('Insurance')}
+      onPress={() => navigation.navigate('')}
     >
-      <BoldText style={styles.itemTitle}>Insurance Title</BoldText>
-      <Text style={styles.itemSubtitle}>Insurance Type</Text>
+      <BoldText style={styles.itemTitle}>Policy Title</BoldText>
+      <View style={styles.tagCover}>
+        <View style={expired ? [styles.tag, styles.tagExpired] : styles.tag}>
+          <Text style={styles.tagText}>
+            {expired ? 'Expired' : 'In Progress'}
+          </Text>
+        </View>
+        {!expired && (
+          <View style={[styles.tag, styles.dateTag]}>
+            <Text style={styles.tagText}>
+              {expired ? 'Expired' : 'In Progress'}
+            </Text>
+          </View>
+        )}
+      </View>
     </TouchableOpacity>
   )
 }
 
 const n = 8
 
-const Insurance = ({ navigation }) => {
+const PolicyMgt = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <Header
           navigation={navigation}
-          title="Insurance Management"
+          title="Customer Policies"
           hasSearch
         />
         <ScrollView style={styles.content}>
@@ -47,8 +60,9 @@ const Insurance = ({ navigation }) => {
             </TouchableOpacity>
           </View> */}
           {[...Array(n)].map((e, i) => (
-            <InsuranceItem
+            <PolicyItem
               key={i}
+              expired={i % 2 === 0}
               navigation={navigation}
             />
           ))}
@@ -110,6 +124,30 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: 5,
   },
+  tagCover: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    marginTop: 10,
+  },
+  tag: {
+    paddingVertical: 3,
+    paddingHorizontal: 10,
+    borderRadius: 20,
+    marginRight: 10,
+    backgroundColor: '#4caf50',
+  },
+  tagExpired: {
+    backgroundColor: '#d32f2f',
+  },
+  dateTag: {
+    backgroundColor: '#1976d2',
+  },
+  tagText: {
+    color: '#fff',
+    fontSize: 12,
+  },
 })
 
-export default Insurance
+export default PolicyMgt

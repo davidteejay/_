@@ -10,27 +10,13 @@ import Text, { BoldText } from '../components/Text'
 import Header from '../components/Header'
 import { FAB } from '../components/Button'
 
-const InsuranceItem = ({ navigation }) => {
-  return (
-    <TouchableOpacity
-      style={styles.item}
-      onPress={() => navigation.navigate('Insurance')}
-    >
-      <BoldText style={styles.itemTitle}>Insurance Title</BoldText>
-      <Text style={styles.itemSubtitle}>Insurance Type</Text>
-    </TouchableOpacity>
-  )
-}
-
-const n = 8
-
-const Insurance = ({ navigation }) => {
+const ClaimsMgt = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <Header
           navigation={navigation}
-          title="Insurance Management"
+          title="Claims"
           hasSearch
         />
         <ScrollView style={styles.content}>
@@ -46,12 +32,6 @@ const Insurance = ({ navigation }) => {
               <Text style={styles.filterText}>Filter</Text>
             </TouchableOpacity>
           </View> */}
-          {[...Array(n)].map((e, i) => (
-            <InsuranceItem
-              key={i}
-              navigation={navigation}
-            />
-          ))}
         </ScrollView>
       </View>
       <FAB
@@ -110,6 +90,30 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: 5,
   },
+  tagCover: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    marginTop: 10,
+  },
+  tag: {
+    paddingVertical: 3,
+    paddingHorizontal: 10,
+    borderRadius: 20,
+    marginRight: 10,
+    backgroundColor: '#4caf50',
+  },
+  tagExpired: {
+    backgroundColor: '#d32f2f',
+  },
+  dateTag: {
+    backgroundColor: '#1976d2',
+  },
+  tagText: {
+    color: '#fff',
+    fontSize: 12,
+  },
 })
 
-export default Insurance
+export default ClaimsMgt

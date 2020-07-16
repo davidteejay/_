@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   content: {
-    padding: 20,
+    padding: 30,
   },
   inputCover: {
     ...globalStyles.shadow,

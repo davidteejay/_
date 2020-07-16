@@ -5,8 +5,9 @@ import {
   ActionSheetIOS, StyleSheet,
 } from 'react-native'
 import { MaterialIcons, Ionicons } from '@expo/vector-icons'
+import { DatePicker as NativePicker } from 'native-base'
 
-import Text, { BoldText } from './Text'
+import Text from './Text'
 
 const Input = ({
   color = '#333',
@@ -29,7 +30,7 @@ const Input = ({
 
   return (
     <View style={{ width, ...coverStyle }}>
-      {label && <BoldText style={{ marginBottom: 15 }}>{label}</BoldText>}
+      {label && <Text style={{ fontSize: 12 }}>{label}</Text>}
       <View
         style={{
           width: '100%',
@@ -128,18 +129,21 @@ export const Dropdown = ({
   placeholder = '',
   style = null,
   error = null,
+  backgroundColor = 'transparent',
+  ...props
 }) => {
   return (
     <View style={{ marginBottom: 10, ...style }}>
-      {label && <BoldText style={{ marginBottom: 15 }}>{label}</BoldText>}
+      {label && <Text style={{ fontSize: 12 }}>{label}</Text>}
       {Platform.OS === 'android' ? (
-        <View style={styles.picker}>
+        <View style={{ ...styles.picker, backgroundColor }}>
           <Picker
             selectedValue={selectedValue}
             style={{ width: '100%' }}
             onValueChange={onValueChange}
             itemStyle={selectedValue ? styles.pickerItem : { ...styles.pickerItem, color: '#0005' }}
             mode="dropdown"
+            {...props}
           >
             <Picker.Item label={placeholder} value={null} />
             {items.map((item) => (
@@ -171,6 +175,7 @@ export const Dropdown = ({
                 }
               })
             }}
+            {...props}
           >
             <Text style={selectedValue ? styles.pickerItem : { ...styles.pickerItem, color: '#333' }}>{selectedValue || placeholder}</Text>
             <MaterialIcons
@@ -193,6 +198,40 @@ export const Dropdown = ({
   )
 }
 
+export const DatePicker = ({
+  label = null,
+  placeholder = 'Select Date',
+  onDateChange = () => null,
+  defaultDate = new Date(),
+  selectedDate = null,
+  backgroundColor = 'transparent',
+  color = '#333',
+  disabled = false,
+  style = null,
+  ...props
+}) => (
+    <View style={{ marginBottom: 10, ...style }}>
+      {label && <Text style={{ fontSize: 12 }}>{label}</Text>}
+      <View style={{ ...styles.picker, backgroundColor }}>
+        <NativePicker
+          defaultDate={defaultDate}
+          animationType="fade"
+          disabled={disabled}
+          placeHolderText={placeholder}
+          placeHolderTextStyle={{ color, fontFamily: 'Montserrat-Medium', fontSize: 14 }}
+          textStyle={{ color, fontFamily: 'Montserrat-Medium', fontSize: 14 }}
+          androidMode="calendar"
+          onDateChange={onDateChange}
+          {...props}
+        >
+          <Text style={{ color, fontSize: 12 }}>
+            {new Date(selectedDate).toLocaleDateString() || placeholder}
+          </Text>
+        </NativePicker>
+      </View>
+    </View>
+)
+
 export default Input
 
 const styles = StyleSheet.create({
@@ -203,6 +242,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#333',
     borderBottomWidth: 1,
     borderStyle: 'solid',
+    paddingHorizontal: 0,
   },
   pickerItem: {
     color: '#000',

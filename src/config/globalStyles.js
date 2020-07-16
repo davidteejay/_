@@ -39,6 +39,12 @@ const globalStyles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 10,
   },
+  underline: {
+    marginVertical: 20,
+    backgroundColor: '#ccc',
+    height: 1,
+    width: '100%',
+  },
 })
 
 export default globalStyles

@@ -12,11 +12,11 @@ import Header from '../components/Header'
 const Dashboard = ({ navigation }) => {
   const links = [
     { label: 'Claims Request', to: '' },
-    { label: 'New Policy', to: '' },
-    { label: 'Renewal Endorsement', to: '' },
-    { label: 'Additional Endorsement', to: '' },
-    { label: 'Cancellation Endorsement', to: '' },
-    { label: 'Deletion Endorsement', to: '' },
+    { label: 'New Policy', to: 'InsuranceMgt' },
+    { label: 'Renewal Endorsement', to: 'RenewalEndorsement' },
+    { label: 'Additional Endorsement', to: 'AdditionalEndorsement' },
+    { label: 'Cancellation Endorsement', to: 'CancellationEndorsement' },
+    { label: 'Deletion Endorsement', to: 'DeletionEndorsement' },
     { label: 'Verify Insurance', to: '' },
   ]
 
@@ -48,6 +48,7 @@ const Dashboard = ({ navigation }) => {
               <TouchableOpacity
                 style={[styles.card, styles.row]}
                 key={to === '' ? label : to}
+                onPress={() => navigation.navigate(to)}
               >
                 <LightText style={styles.text}>{label}</LightText>
                 <MaterialIcons
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   content: {
-    padding: 20,
+    padding: 30,
   },
   title: {
     fontSize: 26,

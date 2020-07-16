@@ -8,61 +8,52 @@ import { MaterialIcons } from '@expo/vector-icons'
 import globalStyles from '../config/globalStyles'
 import Text, { BoldText } from '../components/Text'
 import Header from '../components/Header'
-import { FAB } from '../components/Button'
+import { darkRed } from '../config/colors'
 
-const InsuranceItem = ({ navigation }) => {
+const Notification = ({ read }) => {
   return (
     <TouchableOpacity
       style={styles.item}
-      onPress={() => navigation.navigate('Insurance')}
+      onPress={() => null}
     >
-      <BoldText style={styles.itemTitle}>Insurance Title</BoldText>
-      <Text style={styles.itemSubtitle}>Insurance Type</Text>
+      <View>
+        <View style={!read ? { ...styles.dot, backgroundColor: 'transparent' } : styles.dot} />
+      </View>
+      <View style={styles.itemCover}>
+        <BoldText style={styles.itemTitle}>Notification Title</BoldText>
+        <Text style={styles.itemSubtitle}>Notification Subtitle</Text>
+        <Text style={styles.itemDate}>Notification Date</Text>
+      </View>
+      <View>
+        <MaterialIcons
+          name="delete"
+          color="#f00"
+          size={22}
+        />
+      </View>
     </TouchableOpacity>
   )
 }
 
 const n = 8
 
-const Insurance = ({ navigation }) => {
+const NotificationsMgt = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <Header
           navigation={navigation}
-          title="Insurance Management"
-          hasSearch
+          title="Notifications"
         />
         <ScrollView style={styles.content}>
-          {/* <View style={styles.filterContainer}>
-            <TouchableOpacity
-              style={styles.filterButton}
-            >
-              <Ionicons
-                name="ios-funnel"
-                size={18}
-                color="#333"
-              />
-              <Text style={styles.filterText}>Filter</Text>
-            </TouchableOpacity>
-          </View> */}
           {[...Array(n)].map((e, i) => (
-            <InsuranceItem
+            <Notification
               key={i}
-              navigation={navigation}
+              read={i < 5}
             />
           ))}
         </ScrollView>
       </View>
-      <FAB
-        backgroundColor="#fff"
-      >
-        <MaterialIcons
-          name="filter-list"
-          size={22}
-          color="#333"
-        />
-      </FAB>
     </SafeAreaView>
   )
 }
@@ -102,14 +93,31 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: '100%',
     marginBottom: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   itemTitle: {
     fontSize: 17,
   },
   itemSubtitle: {
     fontSize: 15,
-    marginTop: 5,
+    marginVertical: 5,
+  },
+  itemDate: {
+    fontSize: 13,
+    color: '#666',
+  },
+  itemCover: {
+    flex: 1,
+    paddingHorizontal: 10,
+  },
+  dot: {
+    height: 10,
+    width: 10,
+    borderRadius: 15,
+    backgroundColor: darkRed,
   },
 })
 
-export default Insurance
+export default NotificationsMgt

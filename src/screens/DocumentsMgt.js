@@ -3,54 +3,50 @@ import {
   View, StyleSheet, SafeAreaView, ScrollView,
   TouchableOpacity,
 } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons, Feather } from '@expo/vector-icons'
 
 import globalStyles from '../config/globalStyles'
 import Text, { BoldText } from '../components/Text'
 import Header from '../components/Header'
 import { FAB } from '../components/Button'
 
-const InsuranceItem = ({ navigation }) => {
+const Document = () => {
   return (
     <TouchableOpacity
       style={styles.item}
-      onPress={() => navigation.navigate('Insurance')}
+      onPress={() => null}
     >
-      <BoldText style={styles.itemTitle}>Insurance Title</BoldText>
-      <Text style={styles.itemSubtitle}>Insurance Type</Text>
+      <Feather
+        name="file-text"
+        color="#666"
+        size={56}
+        style={{ marginVertical: 15 }}
+      />
+      <View style={styles.itemBottom}>
+        <BoldText style={styles.itemTitle}>Document Title</BoldText>
+        <Text style={styles.itemDate}>Document Date</Text>
+      </View>
     </TouchableOpacity>
   )
 }
 
 const n = 8
 
-const Insurance = ({ navigation }) => {
+const DocumentsMgt = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <Header
           navigation={navigation}
-          title="Insurance Management"
+          title="Documents"
           hasSearch
         />
-        <ScrollView style={styles.content}>
-          {/* <View style={styles.filterContainer}>
-            <TouchableOpacity
-              style={styles.filterButton}
-            >
-              <Ionicons
-                name="ios-funnel"
-                size={18}
-                color="#333"
-              />
-              <Text style={styles.filterText}>Filter</Text>
-            </TouchableOpacity>
-          </View> */}
+        <ScrollView
+          style={styles.content}
+          contentContainerStyle={styles.itemContainer}
+        >
           {[...Array(n)].map((e, i) => (
-            <InsuranceItem
-              key={i}
-              navigation={navigation}
-            />
+            <Document key={i} />
           ))}
         </ScrollView>
       </View>
@@ -91,25 +87,51 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  itemContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+  },
   filterText: {
     fontSize: 16,
     marginLeft: 7,
   },
   item: {
     ...globalStyles.shadow,
-    backgroundColor: '#fff',
-    padding: 15,
+    backgroundColor: '#ccc',
+    // padding: 15,
     borderRadius: 10,
-    width: '100%',
+    width: '48%',
     marginBottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // overflow: 'hidden',
+    // backgroundColor
   },
   itemTitle: {
-    fontSize: 17,
+    fontSize: 15,
   },
   itemSubtitle: {
     fontSize: 15,
+    marginVertical: 5,
+  },
+  itemDate: {
+    fontSize: 13,
+    color: '#666',
     marginTop: 5,
+  },
+  itemCover: {
+    flex: 1,
+    paddingHorizontal: 10,
+  },
+  itemBottom: {
+    backgroundColor: '#fff',
+    padding: 10,
+    width: '100%',
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
   },
 })
 
-export default Insurance
+export default DocumentsMgt

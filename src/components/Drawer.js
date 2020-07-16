@@ -14,7 +14,7 @@ const links = [
   { label: 'Claims', to: 'ClaimsStack' },
   { label: 'Notifications', to: 'NotificationsStack' },
   { label: 'Documents', to: 'DocumentsStack' },
-  { label: 'Enquiries', to: 'EnquiriesStack' },
+  { label: 'Enquiries (Support)', to: 'EnquiriesStack' },
   { label: 'Staff', to: 'StaffStack' },
   { label: 'Insights', to: 'InsightsStack' },
   { label: 'FAQs', to: 'FAQStack' },

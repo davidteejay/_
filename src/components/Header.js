@@ -68,7 +68,7 @@ const Header = ({
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 15,
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
     width: '100%',
     alignItems: 'center',
     justifyContent: 'space-between',
