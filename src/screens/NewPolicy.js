@@ -31,11 +31,7 @@ const NewPolicy = ({ navigation }) => {
     },
   })
 
-  const [user, setUser] = useState({
-    name: 'Chibuokem O.',
-    email: 'chibuokem_tolu@hotmail.com',
-    phone: '07038125957',
-  })
+  const [user, setUser] = useState(null)
   const [userModal, setUserModal] = useState(false)
 
   const handleUserSearch = (key, value) => {
@@ -191,24 +187,11 @@ const NewPolicy = ({ navigation }) => {
                   </Text>
                 </TouchableOpacity>
                 <Button
-                  text="Create New User"
+                  text="Create New Customer"
                   style={styles.modalButton}
                   onPress={() => {
                     setUserModal(false)
-                    Alert.alert(
-                      'Create New User',
-                      'Select new user type',
-                      [
-                        {
-                          text: 'Individual',
-                          onPress: () => navigation.navigate('NewUser', { type: 'individual' }),
-                        },
-                        {
-                          text: 'Corperate',
-                          onPress: () => navigation.navigate('NewUser', { type: 'corperate' }),
-                        },
-                      ],
-                    )
+                    navigation.navigate('NewCustomer')
                   }}
                 />
               </ScrollView>
@@ -226,7 +209,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   content: {
-    padding: 30,
+    padding: 20,
   },
   inputCover: {
     ...globalStyles.shadow,

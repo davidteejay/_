@@ -14,10 +14,11 @@ const links = [
   { label: 'Claims', to: 'ClaimsStack' },
   { label: 'Notifications', to: 'NotificationsStack' },
   { label: 'Documents', to: 'DocumentsStack' },
-  { label: 'Enquiries (Support)', to: 'EnquiriesStack' },
+  { label: 'Enquiries (Support)', to: 'SupportStack' },
+  { label: 'Customers', to: 'CustomersStack' },
   { label: 'Staff', to: 'StaffStack' },
-  { label: 'Insights', to: 'InsightsStack' },
-  { label: 'FAQs', to: 'FAQStack' },
+  // { label: 'Insights', to: 'InsightsStack' },
+  { label: 'FAQs', to: 'FAQsStack' },
 ]
 
 const Drawer = ({ navigation }) => {
@@ -28,7 +29,7 @@ const Drawer = ({ navigation }) => {
       <ScrollView style={styles.content}>
         <View style={styles.topPanel}>
           <View style={styles.logo} />
-          <BoldText style={styles.topText}>Broker ID</BoldText>
+          <BoldText style={styles.topText}>Broker ID: #234512</BoldText>
           <TouchableOpacity>
             <LightText style={styles.topBottomText}>View Profile</LightText>
           </TouchableOpacity>

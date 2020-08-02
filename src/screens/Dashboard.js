@@ -26,7 +26,7 @@ const Dashboard = ({ navigation }) => {
         <Header navigation={navigation} />
         <ScrollView style={styles.content}>
           <BoldText style={styles.title}>Welcome, Chii</BoldText>
-          <Text style={styles.subtitle}>Broker ID: 234512</Text>
+          <Text style={styles.subtitle}>Broker ID: #234512</Text>
           <View style={styles.row}>
             <View style={styles.card}>
               <BoldText style={styles.number}>31,245</BoldText>
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   content: {
-    padding: 30,
+    padding: 20,
   },
   title: {
     fontSize: 26,

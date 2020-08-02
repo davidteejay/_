@@ -60,7 +60,8 @@ const Button = ({
                 : disabled
                   ? '#555'
                   : color,
-              fontSize: 15,
+              fontSize: 14,
+              textAlign: 'center',
               // marginTop: Platform.OS === 'ios' ? 5 : 0,
               ...textStyle,
             }}
@@ -88,7 +89,8 @@ export const FAB = ({
         right: 30,
         borderRadius: size / 2,
         height: size,
-        width: size,
+        minWidth: size,
+        width: 'auto',
         backgroundColor,
         alignItems: 'center',
         justifyContent: 'center',

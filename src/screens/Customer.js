@@ -1,21 +1,21 @@
 import React from 'react'
 import {
-  View, StyleSheet, SafeAreaView, ScrollView,
-  TouchableOpacity,
+  View, StyleSheet, SafeAreaView,
+  ScrollView,
 } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons'
 
-import globalStyles from '../config/globalStyles'
 import Text, { BoldText } from '../components/Text'
 import Header from '../components/Header'
+import globalStyles from '../config/globalStyles'
+import Button, { FAB } from '../components/Button'
 
-const EditEndorsement = ({ navigation }) => {
+const Customer = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <Header
           navigation={navigation}
-          title="Edit Endorsement"
+          title="Customer Name"
           back
         />
         <ScrollView style={styles.content}>
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default EditEndorsement
+export default Customer

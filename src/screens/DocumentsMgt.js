@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   content: {
-    padding: 30,
+    padding: 20,
   },
   filterContainer: {
     // paddingVertical: 20,

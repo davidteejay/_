@@ -14,22 +14,20 @@ const PolicyItem = ({ navigation, expired }) => {
   return (
     <TouchableOpacity
       style={styles.item}
-      onPress={() => navigation.navigate('')}
+      onPress={() => navigation.navigate('CustomerPolicy')}
     >
       <BoldText style={styles.itemTitle}>Policy Title</BoldText>
       <View style={styles.tagCover}>
+        <View style={expired ? [styles.tag, styles.otherTag] : [styles.tag, styles.dateTag]}>
+          <Text style={styles.tagText}>
+            {expired ? 'Corperate Customer' : 'Individual Customer'}
+          </Text>
+        </View>
         <View style={expired ? [styles.tag, styles.tagExpired] : styles.tag}>
           <Text style={styles.tagText}>
             {expired ? 'Expired' : 'In Progress'}
           </Text>
         </View>
-        {!expired && (
-          <View style={[styles.tag, styles.dateTag]}>
-            <Text style={styles.tagText}>
-              {expired ? 'Expired' : 'In Progress'}
-            </Text>
-          </View>
-        )}
       </View>
     </TouchableOpacity>
   )
@@ -87,7 +85,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   content: {
-    padding: 30,
+    padding: 20,
   },
   filterContainer: {
     // paddingVertical: 20,
@@ -129,10 +127,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     flexWrap: 'wrap',
-    marginTop: 10,
+    marginTop: 20,
   },
   tag: {
-    paddingVertical: 3,
+    paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 20,
     marginRight: 10,
@@ -143,6 +141,9 @@ const styles = StyleSheet.create({
   },
   dateTag: {
     backgroundColor: '#1976d2',
+  },
+  otherTag: {
+    backgroundColor: '#f57c00',
   },
   tagText: {
     color: '#fff',

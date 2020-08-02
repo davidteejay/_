@@ -56,12 +56,23 @@ const Insurance = ({ navigation }) => {
       </View>
       <FAB
         backgroundColor="#fff"
+        size={50}
       >
-        <MaterialIcons
-          name="filter-list"
-          size={22}
-          color="#333"
-        />
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'row',
+            paddingHorizontal: 15,
+          }}
+        >
+          <MaterialIcons
+            name="filter-list"
+            size={22}
+            color="#333"
+          />
+          <Text style={{ marginLeft: 10 }}>Filter Policies</Text>
+        </View>
       </FAB>
     </SafeAreaView>
   )
@@ -73,7 +84,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   content: {
-    padding: 30,
+    padding: 20,
   },
   filterContainer: {
     // paddingVertical: 20,

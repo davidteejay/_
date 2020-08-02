@@ -5,39 +5,54 @@ import {
 } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
-import globalStyles from '../config/globalStyles'
 import Text, { BoldText } from '../components/Text'
 import Header from '../components/Header'
-import { FAB } from '../components/Button'
+import globalStyles from '../config/globalStyles'
+import Button, { FAB } from '../components/Button'
 
-const ClaimItem = ({ navigation }) => {
+const CustomerItem = ({ navigation, expired }) => {
   return (
     <TouchableOpacity
       style={styles.item}
-      onPress={() => navigation.navigate('Claim')}
+      onPress={() => navigation.navigate('Customer')}
     >
-      <BoldText style={styles.itemTitle}>Claim Title</BoldText>
-      <Text style={styles.itemSubtitle}>Claim Type</Text>
+      <BoldText style={styles.itemTitle}>Customer Name</BoldText>
+      <Text style={styles.itemSubtitle}>customer@email.com</Text>
+      <View style={styles.tagCover}>
+        <View style={expired ? [styles.tag, styles.otherTag] : [styles.tag, styles.dateTag]}>
+          <Text style={styles.tagText}>
+            {expired ? 'Corperate Customer' : 'Individual Customer'}
+          </Text>
+        </View>
+      </View>
     </TouchableOpacity>
   )
 }
 
 const n = 8
 
-const ClaimsMgt = ({ navigation }) => {
+const CustomerMgt = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <Header
           navigation={navigation}
-          title="Claims"
+          title="Customers"
           hasSearch
         />
         <ScrollView style={styles.content}>
+          <Button
+            text="+ Add New Customer"
+            style={styles.addButton}
+            textStyle={styles.addButtonText}
+            fullWidth={false}
+            onPress={() => navigation.navigate('NewCustomer')}
+          />
           {[...Array(n)].map((e, i) => (
-            <ClaimItem
+            <CustomerItem
               key={i}
               navigation={navigation}
+              expired={i % 2 === 0}
             />
           ))}
         </ScrollView>
@@ -46,20 +61,13 @@ const ClaimsMgt = ({ navigation }) => {
         backgroundColor="#fff"
         size={50}
       >
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'row',
-            paddingHorizontal: 15,
-          }}
-        >
+        <View style={styles.fab}>
           <MaterialIcons
             name="filter-list"
             size={22}
             color="#333"
           />
-          <Text style={{ marginLeft: 10 }}>Filter Claims</Text>
+          <Text style={{ marginLeft: 10 }}>Filter Customers</Text>
         </View>
       </FAB>
     </SafeAreaView>
@@ -73,26 +81,6 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 20,
-  },
-  filterContainer: {
-    // paddingVertical: 20,
-    marginBottom: 20,
-  },
-  filterButton: {
-    ...globalStyles.shadow,
-    alignSelf: 'flex-end',
-    borderRadius: 4,
-    borderColor: '#333',
-    // borderWidth: .5,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    backgroundColor: 'transparent',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  filterText: {
-    fontSize: 16,
-    marginLeft: 7,
   },
   item: {
     ...globalStyles.shadow,
@@ -114,10 +102,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     flexWrap: 'wrap',
-    marginTop: 10,
+    marginTop: 20,
   },
   tag: {
-    paddingVertical: 3,
+    paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 20,
     marginRight: 10,
@@ -129,10 +117,27 @@ const styles = StyleSheet.create({
   dateTag: {
     backgroundColor: '#1976d2',
   },
+  otherTag: {
+    backgroundColor: '#f57c00',
+  },
   tagText: {
     color: '#fff',
     fontSize: 12,
   },
+  addButton: {
+    alignSelf: 'flex-end',
+    height: 35,
+    marginBottom: 20,
+  },
+  addButtonText: {
+    fontSize: 14,
+  },
+  fab: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 15,
+  },
 })
 
-export default ClaimsMgt
+export default CustomerMgt

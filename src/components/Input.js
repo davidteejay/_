@@ -27,6 +27,7 @@ const Input = ({
   ...props
 }) => {
   const [show, setShow] = useState(false)
+  const [focused, setFocused] = useState(false)
 
   return (
     <View style={{ width, ...coverStyle }}>
@@ -38,7 +39,7 @@ const Input = ({
           alignItems: 'center',
           justifyContent: 'space-between',
           borderBottomColor: color,
-          borderBottomWidth: 1,
+          borderBottomWidth: focused ? 1.5 : 1,
           borderStyle: 'solid',
         }}
       >
@@ -55,6 +56,8 @@ const Input = ({
           placeholder={placeholder}
           placeholderTextColor={color}
           onChangeText={onChangeText}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           multiline={multiline}
           secureTextEntry={secureTextEntry && !show}
           clearButtonMode="while-editing"
@@ -114,7 +117,7 @@ export const Checkbox = ({ value, onValueChange, backgroundColor = '#000' }) => 
     onPress={onValueChange}
   >
     <MaterialIcons
-      size={22}
+      size={14}
       color="#fff"
       name="done"
     />
@@ -141,7 +144,7 @@ export const Dropdown = ({
             selectedValue={selectedValue}
             style={{ width: '100%' }}
             onValueChange={onValueChange}
-            itemStyle={selectedValue ? styles.pickerItem : { ...styles.pickerItem, color: '#0005' }}
+            itemStyle={selectedValue ? styles.pickerItem : { ...styles.pickerItem, color: '#333' }}
             mode="dropdown"
             {...props}
           >
@@ -177,7 +180,7 @@ export const Dropdown = ({
             }}
             {...props}
           >
-            <Text style={selectedValue ? styles.pickerItem : { ...styles.pickerItem, color: '#333' }}>{selectedValue || placeholder}</Text>
+            <Text style={selectedValue ? styles.pickerItem : { ...styles.pickerItem, color: '#333' }}>{selectedValue ? items.find((item) => item.value === selectedValue).label : placeholder}</Text>
             <MaterialIcons
               color="#333"
               size={18}
@@ -189,7 +192,6 @@ export const Dropdown = ({
         style={{
           color: '#f00',
           fontSize: 12,
-          marginTop: 10,
         }}
       >
         {error}
@@ -208,6 +210,7 @@ export const DatePicker = ({
   color = '#333',
   disabled = false,
   style = null,
+  error = null,
   ...props
 }) => (
     <View style={{ marginBottom: 10, ...style }}>
@@ -218,7 +221,9 @@ export const DatePicker = ({
           animationType="fade"
           disabled={disabled}
           placeHolderText={placeholder}
-          placeHolderTextStyle={{ color, fontFamily: 'Montserrat-Medium', fontSize: 14 }}
+          placeHolderTextStyle={{
+            color, fontFamily: 'Montserrat-Medium', fontSize: 14, paddingHorizontal: 0,
+          }}
           textStyle={{ color, fontFamily: 'Montserrat-Medium', fontSize: 14 }}
           androidMode="calendar"
           onDateChange={onDateChange}
@@ -229,6 +234,14 @@ export const DatePicker = ({
           </Text>
         </NativePicker>
       </View>
+      <Text
+        style={{
+          color: '#f00',
+          fontSize: 12,
+        }}
+      >
+        {error}
+      </Text>
     </View>
 )
 

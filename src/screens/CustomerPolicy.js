@@ -10,29 +10,19 @@ import Text, { BoldText } from '../components/Text'
 import Header from '../components/Header'
 import { FAB } from '../components/Button'
 
-const Insurance = ({ navigation }) => {
+const Policy = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <Header
           navigation={navigation}
-          title="Insurance Title"
+          title="Policy Title"
           back
         />
         <ScrollView style={styles.content}>
-          
+
         </ScrollView>
       </View>
-      <FAB
-        backgroundColor="#fff"
-        onPress={() => navigation.navigate('NewPolicy')}
-      >
-        <MaterialIcons
-          name="add"
-          size={22}
-          color="#333"
-        />
-      </FAB>
     </SafeAreaView>
   )
 }
@@ -78,4 +68,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Insurance
+export default Policy

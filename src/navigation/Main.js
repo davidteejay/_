@@ -15,12 +15,24 @@ import Insurance from '../screens/Insurance'
 import NewPolicy from '../screens/NewPolicy'
 
 import CustomerPolicyMgt from '../screens/CustomerPolicyMgt'
+import CustomerPolicy from '../screens/CustomerPolicy'
 
 import ClaimsMgt from '../screens/ClaimsMgt'
+import Claim from '../screens/Claim'
 
 import NotificationsMgt from '../screens/NotificationsMgt'
 
 import DocumentsMgt from '../screens/DocumentsMgt'
+
+import Support from '../screens/Support'
+
+import CustomerMgt from '../screens/CustomerMgt'
+import NewCustomer from '../screens/NewCustomer'
+import Customer from '../screens/Customer'
+
+import StaffMgt from '../screens/StaffMgt'
+
+import FAQs from '../screens/FAQs'
 
 const DashboardStack = createStackNavigator({
   Dashboard: {
@@ -80,6 +92,12 @@ const InsuranceStack = createStackNavigator({
       headerShown: false,
     },
   },
+  NewCustomer: {
+    screen: NewCustomer,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
 })
 
 const CustomerPoliciesStack = createStackNavigator({
@@ -89,11 +107,23 @@ const CustomerPoliciesStack = createStackNavigator({
       headerShown: false,
     },
   },
+  CustomerPolicy: {
+    screen: CustomerPolicy,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
 })
 
 const ClaimsStack = createStackNavigator({
   ClaimsMgt: {
     screen: ClaimsMgt,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  Claim: {
+    screen: Claim,
     navigationOptions: {
       headerShown: false,
     },
@@ -118,6 +148,54 @@ const DocumentsStack = createStackNavigator({
   },
 })
 
+const SupportStack = createStackNavigator({
+  Support: {
+    screen: Support,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+})
+
+const CustomersStack = createStackNavigator({
+  CustomerMgt: {
+    screen: CustomerMgt,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  NewCustomer: {
+    screen: NewCustomer,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  Customer: {
+    screen: Customer,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+})
+
+const StaffStack = createStackNavigator({
+  StaffMgt: {
+    screen: StaffMgt,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+})
+
+const FAQsStack = createStackNavigator({
+  FAQs: {
+    screen: FAQs,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+})
+
 const Main = createDrawerNavigator({
   DashboardStack,
   InsuranceStack,
@@ -125,6 +203,10 @@ const Main = createDrawerNavigator({
   ClaimsStack,
   NotificationsStack,
   DocumentsStack,
+  SupportStack,
+  CustomersStack,
+  StaffStack,
+  FAQsStack,
 }, {
   initialRouteName: 'DashboardStack',
   drawerWidth: 300,

@@ -30,7 +30,7 @@ const globalStyles = StyleSheet.create({
   },
   modalContent: {
     paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingVertical: 10,
     backgroundColor: 'transparent',
     width: '100%',
   },
