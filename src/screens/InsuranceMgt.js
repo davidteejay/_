@@ -1,30 +1,39 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   View, StyleSheet, SafeAreaView, ScrollView,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { getRisks } from '../actions/insurance'
 
 import globalStyles from '../config/globalStyles'
 import Text, { BoldText } from '../components/Text'
 import Header from '../components/Header'
 import { FAB } from '../components/Button'
+import { darkRed } from '../config/colors'
 
-const InsuranceItem = ({ navigation }) => {
+const InsuranceItem = ({ navigation, data }) => {
   return (
     <TouchableOpacity
       style={styles.item}
       onPress={() => navigation.navigate('Insurance')}
     >
-      <BoldText style={styles.itemTitle}>Insurance Title</BoldText>
-      <Text style={styles.itemSubtitle}>Insurance Type</Text>
+      <BoldText style={styles.itemTitle}>{data?.subrisksMemberField}</BoldText>
+      <Text style={styles.itemSubtitle}>{data?.riskField}</Text>
     </TouchableOpacity>
   )
 }
 
-const n = 8
-
 const Insurance = ({ navigation }) => {
+  const dispatch = useDispatch()
+  const { loading: { refreshing }, insurance: { risks } } = useSelector((state) => state)
+  useEffect(() => {
+    dispatch(getRisks())
+  }, [])
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
@@ -33,23 +42,22 @@ const Insurance = ({ navigation }) => {
           title="Insurance Management"
           hasSearch
         />
-        <ScrollView style={styles.content}>
-          {/* <View style={styles.filterContainer}>
-            <TouchableOpacity
-              style={styles.filterButton}
-            >
-              <Ionicons
-                name="ios-funnel"
-                size={18}
-                color="#333"
-              />
-              <Text style={styles.filterText}>Filter</Text>
-            </TouchableOpacity>
-          </View> */}
-          {[...Array(n)].map((e, i) => (
+        <ScrollView
+          style={styles.content}
+          refreshControl={(
+            <RefreshControl
+              refreshing={refreshing}
+              colors={[darkRed]}
+              tintColor={darkRed}
+              onRefresh={() => dispatch(getRisks())}
+            />
+          )}
+        >
+          {risks?.map((risk, i) => (
             <InsuranceItem
               key={i}
               navigation={navigation}
+              data={risk}
             />
           ))}
         </ScrollView>
@@ -116,6 +124,7 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     fontSize: 17,
+    textTransform: 'capitalize',
   },
   itemSubtitle: {
     fontSize: 15,

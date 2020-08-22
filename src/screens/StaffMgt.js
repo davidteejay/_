@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   View, StyleSheet, SafeAreaView, ScrollView,
-  TouchableOpacity, Modal,
+  TouchableOpacity, Modal, RefreshControl,
 } from 'react-native'
 import { MaterialIcons, Ionicons } from '@expo/vector-icons'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { getAllStaff, addStaff as addNewStaff } from '../actions/staff'
 
 import Text, { BoldText } from '../components/Text'
 import Header from '../components/Header'
 import globalStyles from '../config/globalStyles'
 import Button, { FAB } from '../components/Button'
 import Input, { Dropdown } from '../components/Input'
+import { darkRed } from '../config/colors'
 
 const StaffItem = ({ showStaff }) => {
   return (
@@ -31,11 +35,18 @@ const StaffMgt = ({ navigation }) => {
   const [staffModal, setStaffModal] = useState(false)
   const [addStaff, setAddStaff] = useState(false)
   const [newStaff, setNewStaff] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
+    otherName: '',
     email: '',
-    role: null,
-    password: '',
   })
+
+  const dispatch = useDispatch()
+  const { loading: { loading, refreshing }, staff: { all } } = useSelector((state) => state)
+
+  useEffect(() => {
+    dispatch(getAllStaff())
+  }, [])
 
   const showStaffModal = () => {
     setAddStaff(false)
@@ -62,7 +73,17 @@ const StaffMgt = ({ navigation }) => {
           title="Staff"
           hasSearch
         />
-        <ScrollView style={styles.content}>
+        <ScrollView
+          style={styles.content}
+          refreshControl={(
+            <RefreshControl
+              refreshing={refreshing}
+              colors={[darkRed]}
+              tintColor={darkRed}
+              onRefresh={() => dispatch(getAllStaff())}
+            />
+          )}
+        >
           {[...Array(n)].map((e, i) => (
             <StaffItem
               key={i}
@@ -106,19 +127,19 @@ const StaffMgt = ({ navigation }) => {
                   <>
                     <Text style={styles.formTitle}>Add New Staff</Text>
                     <Input
-                      value={newStaff.name}
-                      onChangeText={(val) => handleSetNewStaff('name', val)}
-                      placeholder="Name"
+                      value={newStaff.firstName}
+                      onChangeText={(val) => handleSetNewStaff('firstName', val)}
+                      placeholder="First Name"
                     />
-                    <Dropdown
-                      selectedValue={newStaff.role}
-                      onValueChange={(val) => handleSetNewStaff('role', val)}
-                      placeholder="Select Role"
-                      items={[
-                        { label: 'Customer Manager', value: 'Customer Manager' },
-                        { label: 'Support Manager', value: 'Support Manager' },
-                        { label: 'Field Agent', value: 'Field Agent' },
-                      ]}
+                    <Input
+                      value={newStaff.otherName}
+                      onChangeText={(val) => handleSetNewStaff('otherName', val)}
+                      placeholder="Other Name"
+                    />
+                    <Input
+                      value={newStaff.lastName}
+                      onChangeText={(val) => handleSetNewStaff('lastName', val)}
+                      placeholder="Last Name"
                     />
                     <Input
                       value={newStaff.email}
@@ -126,13 +147,12 @@ const StaffMgt = ({ navigation }) => {
                       placeholder="Email Address"
                       keyboardType="email-address"
                     />
-                    <Input
-                      value={newStaff.password}
-                      onChangeText={(val) => handleSetNewStaff('password', val)}
-                      placeholder="Set Password"
-                      secureTextEntry
+                    <Button
+                      text="Add"
+                      isLoading={loading}
+                      disabled={newStaff.email === '' || newStaff.lastName === '' || newStaff.firstName === ''}
+                      onPress={() => dispatch(addNewStaff(newStaff, () => setStaffModal(false)))}
                     />
-                    <Button text="Add" />
                   </>
                 )
                 : (

@@ -2,16 +2,20 @@ import React, { useState } from 'react'
 import {
   View, StyleSheet, SafeAreaView, ScrollView,
 } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { sendTicket } from '../actions/support'
 
 import Text from '../components/Text'
 import Header from '../components/Header'
-import Input from '../components/Input'
+import Input, { Dropdown } from '../components/Input'
 import Button from '../components/Button'
 
 const Support = ({ navigation }) => {
   const [data, setData] = useState({
     title: '',
     message: '',
+    priority: 'medium',
   })
 
   const handleData = (key, value) => {
@@ -20,6 +24,9 @@ const Support = ({ navigation }) => {
       [key]: value,
     })
   }
+
+  const dispatch = useDispatch()
+  const { loading } = useSelector((state) => state.loading)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,6 +45,16 @@ const Support = ({ navigation }) => {
             onChangeText={(val) => handleData('title', val)}
             placeholder="Title"
           />
+          <Dropdown
+            placeholder="Select Priority"
+            selectedValue={data.priority}
+            onValueChange={(val) => handleData('priority', val)}
+            items={[
+              { label: 'Low', value: 'low' },
+              { label: 'Medium', value: 'medium' },
+              { label: 'High', value: 'high' },
+            ]}
+          />
           <Input
             value={data.message}
             onChangeText={(val) => handleData('message', val)}
@@ -46,6 +63,9 @@ const Support = ({ navigation }) => {
           />
           <Button
             text="Send"
+            isLoading={loading}
+            disabled={data.title === '' || data.message === ''}
+            onPress={() => dispatch(sendTicket(data))}
           />
         </ScrollView>
       </View>

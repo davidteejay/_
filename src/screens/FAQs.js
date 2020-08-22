@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   View, StyleSheet, SafeAreaView,
   ScrollView, TouchableOpacity, UIManager,
-  LayoutAnimation, Platform,
+  LayoutAnimation, Platform, ActivityIndicator,
 } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 
+import { getFAQs } from '../actions/faq'
 import Text from '../components/Text'
 import Header from '../components/Header'
+import { darkRed } from '../config/colors'
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -41,6 +44,13 @@ const FAQ = () => {
 const n = 8
 
 const FAQs = ({ navigation }) => {
+  const { loading: { loading }, faq } = useSelector((state) => state)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getFAQs())
+  }, [])
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
@@ -49,6 +59,13 @@ const FAQs = ({ navigation }) => {
           title="FAQs"
           hasSearch
         />
+        {loading && (
+          <ActivityIndicator
+            color={darkRed}
+            size="large"
+            animating
+          />
+        )}
         <ScrollView style={styles.content}>
           {[...Array(n)].map((e, i) => (
             <FAQ key={i} />

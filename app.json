@@ -11,7 +11,7 @@
       "web"
     ],
     "android": {
-      "packageName": "com.chiplc.brokerportal"
+      "package": "com.chiplc.brokerportal"
     },
     "ios": {
       "bundleIdentifier": "com.chiplc.brokerportal"

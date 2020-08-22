@@ -1,11 +1,22 @@
-import { LOADING } from '../types'
+import { LOADING, REFRESHING } from '../types'
 
-const initialState = false
+const initialState = {
+  loading: false,
+  refreshing: false,
+}
 
 const loadingReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case LOADING:
-      return payload
+      return {
+        ...state,
+        loading: payload,
+      }
+    case REFRESHING:
+      return {
+        ...state,
+        refreshing: payload,
+      }
     default:
       return state
   }

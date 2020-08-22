@@ -53,13 +53,7 @@ const Button = ({
         : IconComponent ?? (
           <Text
             style={{
-              color: transparent
-                ? disabled
-                  ? '#999'
-                  : backgroundColor
-                : disabled
-                  ? '#555'
-                  : color,
+              color,
               fontSize: 14,
               textAlign: 'center',
               // marginTop: Platform.OS === 'ios' ? 5 : 0,

@@ -3,9 +3,11 @@ import {
   View, StyleSheet, SafeAreaView, TouchableOpacity,
   ScrollView,
 } from 'react-native'
+import { useDispatch } from 'react-redux'
 
 import Text, { BoldText, LightText } from './Text'
 import { darkRed } from '../config/colors'
+import { logout } from '../actions/auth'
 
 const links = [
   { label: 'Dashboard', to: 'DashboardStack' },
@@ -23,6 +25,7 @@ const links = [
 
 const Drawer = ({ navigation }) => {
   const { navigate, state: { index } } = navigation
+  const dispatch = useDispatch()
 
   return (
     <SafeAreaView style={styles.container}>
@@ -54,7 +57,10 @@ const Drawer = ({ navigation }) => {
       </ScrollView>
       <TouchableOpacity
         style={[styles.menuItem, styles.logout]}
-        onPress={() => navigate('Auth')}
+        onPress={() => {
+          dispatch(logout())
+          navigate('Auth')
+        }}
       >
         <Text style={{ ...styles.menuItemText, color: '#f00' }}>Logout</Text>
       </TouchableOpacity>

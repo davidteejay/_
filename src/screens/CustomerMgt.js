@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   View, StyleSheet, SafeAreaView, ScrollView,
-  TouchableOpacity,
+  TouchableOpacity, Dimensions, RefreshControl,
 } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
+import { TabView } from 'react-native-tab-view'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { getAllCustomers } from '../actions/customers'
 
 import Text, { BoldText } from '../components/Text'
 import Header from '../components/Header'
 import globalStyles from '../config/globalStyles'
 import Button, { FAB } from '../components/Button'
+import { darkRed } from '../config/colors'
 
 const CustomerItem = ({ navigation, expired }) => {
   return (
@@ -29,9 +34,69 @@ const CustomerItem = ({ navigation, expired }) => {
   )
 }
 
-const n = 8
+const IndividualCustomers = ({ navigation }) => {
+  const dispatch = useDispatch()
+  const { customers: { individual } } = useSelector((state) => state)
+
+  return (
+    <ScrollView
+      style={styles.tabContent}
+    >
+      <CustomerItem
+        navigation={navigation}
+        expired={false}
+      />
+    </ScrollView>
+  )
+}
+
+const CorperateCustomers = ({ navigation }) => {
+  const { customers: { corperate } } = useSelector((state) => state)
+
+  return (
+    <ScrollView
+      style={styles.tabContent}
+    >
+      <CustomerItem
+        navigation={navigation}
+        expired
+      />
+    </ScrollView>
+  )
+}
 
 const CustomerMgt = ({ navigation }) => {
+  const [index, setIndex] = useState(0)
+  const [routes] = useState([
+    { key: 'first', label: 'Individual' },
+    { key: 'second', label: 'Corperate' },
+  ]);
+
+  const dispatch = useDispatch()
+  const { refreshing } = useSelector((state) => state.loading)
+  useEffect(() => {
+    dispatch(getAllCustomers())
+  }, [])
+
+  const renderScene = ({ route }) => {
+    switch (route.key) {
+      case 'first':
+        return (
+          <IndividualCustomers
+            navigation={navigation}
+          />
+        )
+      case 'second':
+        return (
+          <CorperateCustomers
+            navigation={navigation}
+          />
+        )
+      default:
+        return null;
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
@@ -40,21 +105,52 @@ const CustomerMgt = ({ navigation }) => {
           title="Customers"
           hasSearch
         />
-        <ScrollView style={styles.content}>
-          <Button
-            text="+ Add New Customer"
-            style={styles.addButton}
-            textStyle={styles.addButtonText}
-            fullWidth={false}
-            onPress={() => navigation.navigate('NewCustomer')}
-          />
-          {[...Array(n)].map((e, i) => (
-            <CustomerItem
-              key={i}
-              navigation={navigation}
-              expired={i % 2 === 0}
+        <ScrollView
+          style={styles.content}
+          stickyHeaderIndices={[1]}
+          refreshControl={(
+            <RefreshControl
+              colors={[darkRed]}
+              tintColor={darkRed}
+              refreshing={refreshing}
+              onRefresh={() => dispatch(getAllCustomers())}
             />
-          ))}
+          )}
+        >
+          <View style={{ padding: 20 }}>
+            <Button
+              text="+ Add New Customer"
+              style={styles.addButton}
+              textStyle={styles.addButtonText}
+              fullWidth={false}
+              onPress={() => navigation.navigate('NewCustomer')}
+            />
+          </View>
+          <ScrollView
+            style={{ width: '100%' }}
+            contentContainerStyle={styles.tabHeader}
+          >
+            <TouchableOpacity
+              style={styles.tab}
+              onPress={() => setIndex(0)}
+            >
+              <Text style={{ color: index === 0 ? '#000' : '#aaa' }}>Individual</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.tab}
+              onPress={() => setIndex(1)}
+            >
+              <Text style={{ color: index === 1 ? '#000' : '#aaa' }}>Corperate</Text>
+            </TouchableOpacity>
+          </ScrollView>
+          <TabView
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={{ width: Dimensions.get('window').width }}
+            renderTabBar={() => null}
+          />
+
         </ScrollView>
       </View>
       <FAB
@@ -79,9 +175,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  content: {
-    padding: 20,
-  },
+  content: {},
   item: {
     ...globalStyles.shadow,
     backgroundColor: '#fff',
@@ -127,7 +221,7 @@ const styles = StyleSheet.create({
   addButton: {
     alignSelf: 'flex-end',
     height: 35,
-    marginBottom: 20,
+    marginBottom: 0,
   },
   addButtonText: {
     fontSize: 14,
@@ -137,6 +231,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     paddingHorizontal: 15,
+  },
+  tabHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
+    backgroundColor: '#fff',
+  },
+  tab: {
+    width: '50%',
+    paddingVertical: 15,
+    alignItems: 'center',
+  },
+  tabContent: {
+    padding: 20,
   },
 })
 

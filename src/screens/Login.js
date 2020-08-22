@@ -3,6 +3,9 @@ import {
   View, SafeAreaView, StyleSheet,
   KeyboardAvoidingView, Platform, TouchableOpacity,
 } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { login } from '../actions/auth'
 
 import Text from '../components/Text'
 import Input from '../components/Input'
@@ -11,7 +14,7 @@ import Button from '../components/Button'
 
 const Login = ({ navigation }) => {
   const [data, setData] = useState({
-    brokerId: '',
+    email: '',
     password: '',
   })
 
@@ -21,6 +24,9 @@ const Login = ({ navigation }) => {
       [key]: value,
     })
   }
+
+  const dispatch = useDispatch()
+  const { loading } = useSelector((state) => state.loading)
 
   return (
     <KeyboardAvoidingView
@@ -34,9 +40,9 @@ const Login = ({ navigation }) => {
           </View>
           <Text style={styles.title}>Login to your Portal</Text>
           <Input
-            value={data.brokerId}
-            onChangeText={(val) => handleData('brokerId', val)}
-            placeholder="Broker ID"
+            value={data.email}
+            onChangeText={(val) => handleData('email', val)}
+            placeholder="Email Address"
           />
           <Input
             value={data.password}
@@ -47,7 +53,9 @@ const Login = ({ navigation }) => {
           <Button
             text="Login"
             style={styles.button}
-            onPress={() => navigation.navigate('Main')}
+            onPress={() => dispatch(login(data, navigation))}
+            isLoading={loading}
+            disabled={data.email === '' || data.password === ''}
           />
           <TouchableOpacity
             style={styles.forgotPassword}
@@ -93,7 +101,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   forgotPasswordText: {
-    fontSize: 17,
+    fontSize: 14,
   },
 })
 
